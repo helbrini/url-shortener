@@ -106,7 +106,10 @@ jobs:
             -v /var/run/docker.sock:/var/run/docker.sock \
             aquasec/trivy:latest image \
             --scanners vuln \
-            --severity HIGH,CRI
+            --severity HIGH,CRITICAL \
+            --ignore-unfixed \
+            --exit-code 1 \
+            url-shortener:ci
 
   ansible-lint:
     runs-on: ubuntu-latest
