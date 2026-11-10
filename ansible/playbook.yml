@@ -1,0 +1,24 @@
+- name: Configurer l'application
+  hosts: local
+  vars:
+    app_env: dev
+    app_port: 8000
+    app_dir: /tmp/ansible-demo
+  tasks:
+    - name: Créer le dossier
+      ansible.builtin.file:
+        path: "{{ app_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Générer la configuration depuis le template
+      ansible.builtin.template:
+        src: app.conf.j2
+        dest: "{{ app_dir }}/app.conf"
+        mode: "0644"
+      notify: Recharger l'application
+
+  handlers:
+    - name: Recharger l'application
+      ansible.builtin.debug:
+        msg: "Configuration modifiée : on recharge l'application"
