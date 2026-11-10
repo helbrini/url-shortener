@@ -10,3 +10,11 @@
     dest: "{{ app_dir }}/app.conf"
     mode: "0644"
   notify: Recharger l'application
+
+- name: Générer le fichier d'environnement avec le secret
+  ansible.builtin.copy:
+    dest: "{{ app_dir }}/app.env"
+    content: |
+      DATABASE_URL=postgresql://shortener:{{ db_password }}@db:5432/shortener
+    mode: "0600"
+  no_log: true
