@@ -1,0 +1,4 @@
+- name: Configurer l'application
+  hosts: local
+  roles:
+    - app
