@@ -1,3 +1,7 @@
 .venv/
 __pycache__/
 *.bak
+.terraform/
+*.tfstate
+*.tfstate.*
+tfplan
