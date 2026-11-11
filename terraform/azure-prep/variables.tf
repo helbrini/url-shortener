@@ -15,3 +15,15 @@ variable "location" {
   type        = string
   default     = "francecentral"
 }
+
+variable "image_tag" {
+  description = "Tag de l'image de l'API (hash de commit publié dans GHCR)"
+  type        = string
+  default     = "latest"
+}
+
+variable "database_url" {
+  description = "Chaîne de connexion à la base Postgres"
+  type        = string
+  sensitive   = true
+}
