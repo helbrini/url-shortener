@@ -7,3 +7,8 @@ output "subnet_id" {
   description = "Identifiant du sous-réseau applicatif"
   value       = azurerm_subnet.app.id
 }
+
+output "api_url" {
+  description = "Adresse publique de l'API"
+  value       = "https://${azurerm_container_app.api.ingress[0].fqdn}"
+}
