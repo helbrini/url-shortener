@@ -122,3 +122,18 @@ jobs:
         run: pip install ansible-lint
       - name: Lint Ansible
         run: ansible-lint ansible/
+
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - name: Format check
+        run: terraform fmt -check -recursive
+        working-directory: terraform
+      - name: Init
+        run: terraform init -backend=false
+        working-directory: terraform/demo-local
+      - name: Validate
+        run: terraform validate
+        working-directory: terraform/demo-local
