@@ -137,3 +137,9 @@ jobs:
       - name: Validate
         run: terraform validate
         working-directory: terraform/demo-local
+      - name: Init (azure-prep)
+        run: terraform init -backend=false
+        working-directory: terraform/azure-prep
+      - name: Validate (azure-prep)
+        run: terraform validate
+        working-directory: terraform/azure-prep
