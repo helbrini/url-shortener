@@ -150,5 +150,6 @@ jobs:
             aquasec/trivy:latest config \
             --severity HIGH,CRITICAL \
             --skip-dirs "**/.terraform" \
+            --tf-vars /repo/terraform/azure-prep/scan.tfvars \
             --exit-code 1 \
             /repo/terraform
