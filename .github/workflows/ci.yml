@@ -143,3 +143,12 @@ jobs:
       - name: Validate (azure-prep)
         run: terraform validate
         working-directory: terraform/azure-prep
+      - name: Scan Terraform with Trivy
+        run: |
+          docker run --rm \
+            -v "$PWD":/repo \
+            aquasec/trivy:latest config \
+            --severity HIGH,CRITICAL \
+            --skip-dirs "**/.terraform" \
+            --exit-code 1 \
+            /repo/terraform
