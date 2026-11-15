@@ -23,20 +23,13 @@ resource "azurerm_resource_group" "main" {
   }
 }
 
-resource "azurerm_virtual_network" "main" {
-  name                = "vnet-${var.project}-${var.environment}"
-  address_space       = ["10.0.0.0/16"]
+module "network" {
+  source = "../modules/network"
+
+  name_suffix         = "${var.project}-${var.environment}"
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
-
-  tags = azurerm_resource_group.main.tags
-}
-
-resource "azurerm_subnet" "app" {
-  name                 = "snet-app"
-  resource_group_name  = azurerm_resource_group.main.name
-  virtual_network_name = azurerm_virtual_network.main.name
-  address_prefixes     = ["10.0.1.0/24"]
+  tags                = azurerm_resource_group.main.tags
 }
 
 resource "azurerm_log_analytics_workspace" "main" {

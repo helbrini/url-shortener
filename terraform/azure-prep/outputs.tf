@@ -5,7 +5,7 @@ output "resource_group_name" {
 
 output "subnet_id" {
   description = "Identifiant du sous-réseau applicatif"
-  value       = azurerm_subnet.app.id
+  value       = module.network.subnet_id
 }
 
 output "api_url" {
