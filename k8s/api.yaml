@@ -25,9 +25,15 @@ spec:
       labels:
         app: api
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: api
-          image: ghcr.io/helbrini/url-shortener:latest
+          image: ghcr.io/helbrini/url-shortener:9ba5be686c7e6a891d1d92faf2505e4a954f3427
           ports:
             - containerPort: 8000
           env:
@@ -38,6 +44,11 @@ spec:
                   key: DATABASE_URL
             - name: REDIS_URL
               value: redis://redis:6379/0
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
           readinessProbe:
             httpGet:
               path: /health
@@ -55,3 +66,9 @@ spec:
               memory: 64Mi
             limits:
               memory: 256Mi
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
